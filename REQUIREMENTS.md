@@ -1,0 +1,13 @@
+# Core Data & Numerical Libraries
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Machine Learning & Optimization
+lightgbm>=4.0.0
+scikit-learn>=1.2.0
+optuna>=3.0.0
+
+# Utilities & Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
