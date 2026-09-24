@@ -1,0 +1,58 @@
+
+
+# ==============================================================================
+# CONFIGURATION: config.yaml
+# Project 1C: Cross-Sectional Propensity & Stock-Ranking Engine
+# Zetheta Algorithms Private Limited (CIN: U62012MH2023PTC410415)
+# ==============================================================================
+
+project:
+  name: "Project 1C - Cross-Sectional Propensity & Stock-Ranking Engine"
+  desk: "Equity Research & Quant Strategies"
+  author: "Tarun Kumar Das (@ZethetaIntern)"
+
+universe:
+  index_benchmark: "Nifty 500"
+  survivorship_safe: true
+  min_liquidity_adv_inr: 50000000  # 5 Crore INR Average Daily Volume threshold
+
+features:
+  families:
+    - "Value"
+    - "Momentum"
+    - "Quality"
+    - "Growth"
+    - "Low-Risk"
+    - "Flow"
+  winsorization_percentiles: [0.01, 0.99]
+  neutralization:
+    enabled: true
+    controls: ["sector_dummies", "log_market_cap"]
+
+model:
+  engine: "LightGBM LambdaRank"
+  objective: "lambdarank"
+  metric: "ndcg"
+  ndcg_eval_at: [10, 20]
+  hyperparameters:
+    learning_rate: 0.03
+    num_leaves: 31
+    min_data_in_leaf: 100
+    feature_fraction: 0.8
+    num_boost_round: 300
+    early_stopping_rounds: 30
+
+calibration:
+  method: "Isotonic Regression"
+  conformal_alpha: 0.2
+
+backtest:
+  holding_horizon_days: 21
+  rebalance_frequency: "Monthly"
+  num_deciles: 10
+  transaction_drag_bps: 25
+
+compliance:
+  cin: "U62012MH2023PTC410415"
+  audit_logging: true
+  hash_algorithm: "SHA-256"
